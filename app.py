@@ -253,7 +253,17 @@ def delete_user():
 
     return redirect("/signup")
 
+@app.route('/users/<int:user_id>/likes', methods=['GET'])
+def show_likes(user_id):
+    '''show page with all user likes.'''
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
 
+    user = User.query.get_or_404(user_id)
+    likes = user.likes
+
+    return render_template('users/likes.html', user=user, likes=likes)
 
 
 
